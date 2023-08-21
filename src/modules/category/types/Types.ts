@@ -1,6 +1,6 @@
 export interface ICategorySlice {
   isAuth: boolean;
-  categoryList: ICategory[] | null;
+  categoryList: ICategory[];
   subCategoryList: IField[] | null;
   setCategoryList: (categoryList: ICategory) => void;
   setIsAuth: (isAuth: boolean) => void;
@@ -25,17 +25,31 @@ export interface ICategorySlice {
 }
 
 export interface ICategory {
-  id: string;
-  name: string;
   fields: IField[];
+  id: string;
   selectedField: IField | null;
+  name: string;
+  children: IChildren[] | null;
 }
 
 export interface IField {
   id: string;
   CategoryId: string | null;
-  fieldId: string | null;
   name: string | null;
   type: string | null;
   value: string | number | boolean | null;
+}
+
+export interface IChildren {
+  id: string;
+  child: IChild;
+}
+
+export interface IChild {
+  id: string;
+  type: string | null;
+  name: string | null;
+  value: string | number | boolean | null;
+  fieldId: string;
+  CategoryId: string;
 }

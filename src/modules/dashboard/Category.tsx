@@ -36,22 +36,13 @@ const Category = ({
           onPress={() => createNewSubCategory(categoryIndex)}
         />
       </View>
-      <View style={[styles.subConatiner]}>
-        <FlatList
-          keyExtractor={item => item?.id}
-          data={item?.children}
-          renderItem={({ item, index }) => (
-            <CategoryField item={item} categoryId={item?.item} />
-          )}
-        />
-        <Button
-          icon="delete"
-          title={'REMOVE'}
-          mode="text"
-          onPress={() => {}}
-          style={[CSS.mt1]}
-        />
-      </View>
+      <FlatList
+        keyExtractor={le => le?.id}
+        data={item?.children}
+        renderItem={({ i, index }) => (
+          <CategoryField item={i} categoryId={item?.id} />
+        )}
+      />
     </View>
   );
 };

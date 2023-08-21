@@ -2,7 +2,13 @@ import uuid from 'react-native-uuid';
 import { StateCreator } from 'zustand';
 import { Strings } from '~theme/styles/Strings';
 
-import { ICategory, ICategorySlice, IField } from '../types/Types';
+import {
+  ICategory,
+  ICategorySlice,
+  IChild,
+  IChildren,
+  IField,
+} from '../types/Types';
 
 const initialState = {
   isAuth: false,
@@ -20,6 +26,7 @@ const initialState = {
           value: null,
         },
       ],
+      children: null,
       selectedField: null,
     },
   ],
@@ -178,6 +185,7 @@ export const createCategorySlice: StateCreator<ICategorySlice> = set => ({
           },
         ],
         selectedField: null,
+        children: null,
       };
 
       const updatedCategoryList = [...state?.categoryList, newCategory];
@@ -191,21 +199,25 @@ export const createCategorySlice: StateCreator<ICategorySlice> = set => ({
 
       if (categoryIndex >= 0 && categoryIndex < updatedCategoryList.length) {
         const category = { ...updatedCategoryList[categoryIndex] };
-        const newChildren: IChildObject[] = [];
 
+        const newSubChildren: IChildren[] = [];
         category.fields.forEach(field => {
-          const newChildObject: IChildObject = {
-            id: uuid.v4()?.toString(),
-            CategoryId: category?.id,
-            fieldId: field.id,
-            name: field?.name,
-            type: field?.type,
-            value: null,
-          };
-          newChildren.push(newChildObject);
+          // const newSubChild: IChildren = {
+          //   id: uuid.v4().toString(),
+          //   child: field, // Use the field as the subchild
+          // };
+          newSubChildren.push(field);
         });
 
-        category.children = newChildren;
+        const newChild: IChild = {
+          id: uuid.v4().toString(),
+          child: newSubChildren,
+        };
+
+        if (!category.children) {
+          category.children = [];
+        }
+        category.children.push(newChild);
         updatedCategoryList[categoryIndex] = category;
       }
 
