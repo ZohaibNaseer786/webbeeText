@@ -21,7 +21,7 @@ const DashBoard = ({ item }) => {
           <Category item={item} categoryIndex={index} />
         )}
       />
-
+<Text>tu to gya ristokiii</Text>
       {/* <DateComponent
         dateObj={item => {
           console.log(item);
